@@ -4,11 +4,11 @@ import Rating from "./Rating";
 function Product({ product }) {
   return (
     <div className="card" key={product.name}>
-      <a href="/product">
-        <img className="medium" src="images/p1.jpg" alt="product" />
+      <a href={"/product/" + product._id}>
+        <img className="medium" src={product.images} alt="product" />
       </a>
       <div className="card-body">
-        <a href="/product">
+        <a href={"/product" + product._id}>
           <h2>{product.name}</h2>
         </a>
         <Rating rating={product.rating} numReviews={product.numReviews} />
