@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Product from "./components/Product";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -28,24 +29,7 @@ function App() {
       <main>
         <div className="row center">
           {products.map((product) => (
-            <div className="card" key={product.name}>
-              <a href="/product">
-                <img className="medium" src="images/p1.jpg" alt="product" />
-              </a>
-              <div className="card-body">
-                <a href="/product">
-                  <h2>{product.name}</h2>
-                </a>
-                <div className="rating">
-                  <span className="fa fa-star"></span>
-                  <span className="fa fa-star-half-o"></span>
-                  <span className="fa fa-star"></span>
-                  <span className="fa fa-star"></span>
-                  <span className="fa fa-star"></span>
-                </div>
-                <div className="price">${product.price}</div>
-              </div>
-            </div>
+            <Product product={product} key={product._id} />
           ))}
         </div>
       </main>
