@@ -14,7 +14,7 @@ app.get('/api/v1/product/:id', (req, res) => {
   const { id } = req.params;
 
   const product = products.products.find((el) => el._id === id * 1);
-  if (!product) return res.send({ error: 'No Product Found' });
+  if (!product) return res.status(404).send({ error: 'No Product Found' });
   // console.log(product);
   res.send({ product });
 });
