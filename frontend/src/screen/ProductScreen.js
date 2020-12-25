@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import Rating from "../components/Rating";
 import LoadingBox from "../components/LoadingBox";
@@ -9,12 +9,18 @@ import { fetchProductDetails } from "../redux/actions/Products";
 function ProductScreen() {
   const dispatch = useDispatch();
   const params = useParams();
+  const history = useHistory();
+  const [qty, setQty] = useState(1);
   const productDetails = useSelector((state) => state.productDetails);
   let { loading, product, error } = productDetails;
 
   useEffect(() => {
     dispatch(fetchProductDetails(params.id));
   }, [dispatch, params.id]);
+
+  const addToCartHandler = () => {
+    history.push(`/cart/${params.id}?qty=${qty}`);
+  };
 
   return (
     <div>
@@ -29,7 +35,6 @@ function ProductScreen() {
             <h1>{error}</h1>
           ) : (
             <div className="row top">
-              {console.log(productDetails)}
               <div className="col-2">
                 <img
                   className="large"
@@ -78,9 +83,39 @@ function ProductScreen() {
                         </div>
                       </div>
                     </li>
-                    <li>
-                      <button className="primary block">Add to Cart</button>
-                    </li>
+
+                    {product.countInStock > 0 && (
+                      <>
+                        <li>
+                          <div className="row">
+                            <div>Qty</div>
+                            <div>
+                              <select
+                                name=""
+                                value={qty}
+                                onChange={(e) => setQty(e.target.value)}
+                              >
+                                {[...Array(product.countInStock).keys()].map(
+                                  (x) => (
+                                    <option key={x + 1} value={x + 1}>
+                                      {x + 1}
+                                    </option>
+                                  )
+                                )}
+                              </select>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <button
+                            onClick={addToCartHandler}
+                            className="primary block"
+                          >
+                            Add to Cart
+                          </button>
+                        </li>
+                      </>
+                    )}
                   </ul>
                 </div>
               </div>
