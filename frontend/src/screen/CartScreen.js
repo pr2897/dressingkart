@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import MessageBox from "../components/MessageBox";
-import { addToCart } from "../redux/actions/cart";
+import { addToCart, removeFromCart } from "../redux/actions/cart";
 
 function CartScreen() {
   const params = useParams();
@@ -12,7 +12,6 @@ function CartScreen() {
   const qty = location.search ? location.search.split("=")[1] : 1;
 
   const cart = useSelector((state) => state.cart);
-  console.log(cart);
   const { cartItems } = cart;
 
   const { id } = params;
@@ -24,7 +23,7 @@ function CartScreen() {
 
   const removeFromCartHandler = (id) => {
     //implement delete action
-    console.log(`in remove handler >>>`);
+    dispatch(removeFromCart(id));
   };
   const checkoutHandler = () => {
     history.push("/signin?redirect=shipping");
