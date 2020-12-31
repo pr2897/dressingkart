@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
@@ -20,6 +22,8 @@ mongoose
 // MIDDLEWARES
 
 app.use(morgan('tiny'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // ROUTERS
 app.use('/api/v1/users/', userRouter);
