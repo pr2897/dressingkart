@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 
 const userRouter = require('./routers/userRouter');
-const products = require('./data');
+const ProductRouter = require('./routers/productRouter');
 
 const app = express();
 
@@ -23,18 +23,7 @@ app.use(morgan('tiny'));
 
 // ROUTERS
 app.use('/api/v1/users/', userRouter);
-
-app.get('/api/v1/products', (req, res) => {
-  res.send({ products });
-});
-
-app.get('/api/v1/product/:id', (req, res) => {
-  const { id } = req.params;
-
-  const product = products.products.find((el) => el._id === id * 1);
-  if (!product) return res.status(404).send({ error: 'No Product Found' });
-  res.send({ product });
-});
+app.use('/api/v1/products', ProductRouter);
 
 app.use((err, req, res, next) =>
   res.status(500).send({ message: err.message })
