@@ -171,6 +171,14 @@ img.small {
 }
 
 /* Alerts */
+
+.loading {
+  display: block !important;
+}
+.fa.fa-spinner.fa-spin {
+  color: #704040;
+}
+
 .success {
   color: #20a020;
 }
