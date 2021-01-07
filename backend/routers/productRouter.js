@@ -4,14 +4,6 @@ const Product = require('../models/productModel');
 
 const productRouter = express.Router();
 
-productRouter.get(
-  '/',
-  expressAsyncHandler(async (req, res) => {
-    const products = await Product.find({});
-    res.send({ products });
-  })
-);
-
 // productRouter.get(
 //   '/seed',
 //   expressAsyncHandler(async (req, res) => {
@@ -19,6 +11,14 @@ productRouter.get(
 //     res.send({ createdProducts });
 //   })
 // );
+
+productRouter.get(
+  '/',
+  expressAsyncHandler(async (req, res) => {
+    const products = await Product.find({});
+    res.send({ products });
+  })
+);
 
 productRouter.get(
   '/:id',
