@@ -1,13 +1,23 @@
-import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../actions/cart/actionTypes";
+import {
+  CART_ADD_ITEM,
+  CART_REMOVE_ITEM,
+  CART_SAVE_SHIPPING_ADDRESS,
+} from "../actions/cart/actionTypes";
 
 const initialState = {
   cart: localStorage.getItem("cart")
     ? JSON.parse(localStorage.getItem("cart"))
     : [],
+  shippingAddress: localStorage.getItem("shippingAddress")
+    ? JSON.parse(localStorage.getItem("shippingAddress"))
+    : [],
 };
 
 export const cartReducer = (
-  state = { cartItems: initialState.cart },
+  state = {
+    cartItems: initialState.cart,
+    shippingAddress: initialState.shippingAddress,
+  },
   action
 ) => {
   switch (action.type) {
@@ -34,6 +44,9 @@ export const cartReducer = (
         cartItems: state.cartItems.filter((x) => x.product !== action.payload),
       };
       return updatedCart;
+
+    case CART_SAVE_SHIPPING_ADDRESS:
+      return { ...state, shippingAddress: action.payload };
 
     default:
       return state;
