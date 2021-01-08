@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import { signout } from "./redux/actions/user";
 import CartScreen from "./screen/CartScreen";
 import HomeScreen from "./screen/HomeScreen";
+import OrderScreen from "./screen/OrderScreen";
 import PaymentMethodScreen from "./screen/PaymentMethodScreen";
 import PlaceOrderScreen from "./screen/PlaceOrderScreen";
 import ProductScreen from "./screen/ProductScreen";
@@ -62,6 +63,7 @@ function App() {
           <Route path="/shipping" component={ShippingAddressScreen}></Route>
           <Route path="/payment" component={PaymentMethodScreen}></Route>
           <Route path="/place-order" component={PlaceOrderScreen}></Route>
+          <Route path="/order/:id" component={OrderScreen}></Route>
           <Route path="/" component={HomeScreen} exact />
         </main>
 
