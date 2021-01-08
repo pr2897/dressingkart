@@ -64,7 +64,7 @@ function CartScreen() {
                         ))}
                       </select>
                     </div>
-                    <div>${item.price}</div>
+                    <div>₹{item.price}</div>
                     <div className="">
                       <button
                         onClick={() => removeFromCartHandler(item.product)}
@@ -85,7 +85,7 @@ function CartScreen() {
             <li>
               <h2>
                 Subtotal ({cartItems.reduce((a, c) => a + Number(c.qty), 0)})
-                items :$
+                items :₹
                 {cartItems.reduce((a, c) => a + Number(c.qty) * c.price, 0)}
               </h2>
             </li>

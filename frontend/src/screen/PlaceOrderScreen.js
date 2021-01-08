@@ -90,8 +90,8 @@ function PlaceOrderScreen(props) {
                             </Link>
                           </div>
                           <div>
-                            {item.qty} x ${item.price} ={" "}
-                            <strong> ${item.qty * item.price} </strong>
+                            {item.qty} x ₹{item.price} ={" "}
+                            <strong> ₹{item.qty * item.price} </strong>
                           </div>
                         </div>
                       </li>
@@ -111,19 +111,19 @@ function PlaceOrderScreen(props) {
               <li>
                 <div className="row">
                   <div>Items</div>
-                  <div>${cart.itemsPrice}</div>
+                  <div>₹{cart.itemsPrice}</div>
                 </div>
               </li>
               <li>
                 <div className="row">
                   <div>Shipping</div>
-                  <div>${cart.shippingPrice}</div>
+                  <div>₹{cart.shippingPrice}</div>
                 </div>
               </li>
               <li>
                 <div className="row">
                   <div>Tax</div>
-                  <div>${cart.taxPrice}</div>
+                  <div>₹{cart.taxPrice}</div>
                 </div>
               </li>
               <li>
@@ -132,7 +132,7 @@ function PlaceOrderScreen(props) {
                     <strong>Total</strong>
                   </div>
                   <div>
-                    <strong>${cart.totalPrice}</strong>
+                    <strong>₹{cart.totalPrice}</strong>
                   </div>
                 </div>
               </li>

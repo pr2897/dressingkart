@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import CheckoutSteps from "../components/CheckoutSteps";
 
 import MessageBox from "../components/MessageBox";
 import LoadingBox from "../components/LoadingBox";
 import { detailsOrder } from "../redux/actions/order";
+
+import PaymentButton from "../components/PaymentButton";
 
 function OrderScreen(props) {
   const orderId = props.match.params.id;
@@ -84,8 +85,8 @@ function OrderScreen(props) {
                             </Link>
                           </div>
                           <div>
-                            {item.qty} x ${item.price} ={" "}
-                            <strong> ${item.qty * item.price} </strong>
+                            {item.qty} x ₹{item.price} ={" "}
+                            <strong> ₹{item.qty * item.price} </strong>
                           </div>
                         </div>
                       </li>
@@ -105,19 +106,19 @@ function OrderScreen(props) {
               <li>
                 <div className="row">
                   <div>Items</div>
-                  <div>${order.itemsPrice}</div>
+                  <div>₹{order.itemsPrice}</div>
                 </div>
               </li>
               <li>
                 <div className="row">
                   <div>Shipping</div>
-                  <div>${order.shippingPrice}</div>
+                  <div>₹{order.shippingPrice}</div>
                 </div>
               </li>
               <li>
                 <div className="row">
                   <div>Tax</div>
-                  <div>${order.taxPrice}</div>
+                  <div>₹{order.taxPrice}</div>
                 </div>
               </li>
               <li>
@@ -126,11 +127,13 @@ function OrderScreen(props) {
                     <strong>Total</strong>
                   </div>
                   <div>
-                    <strong>${order.totalPrice}</strong>
+                    <strong>₹{order.totalPrice}</strong>
                   </div>
                 </div>
               </li>
             </ul>
+            <hr />
+            <PaymentButton amountToPay={order.totalPrice} />
           </div>
         </div>
       </div>
