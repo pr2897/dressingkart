@@ -29,26 +29,24 @@ function PaymentMethodScreen(props) {
           <div>
             <input
               type="radio"
-              id="paypal"
-              value="Paypal"
+              id="PayTM"
+              value="PayTM"
               name="paymentMethod"
               required
-              checked
-              onClick={(e) => {
-                setpaymentMethod(e.target.value);
-              }}
+              onChange={(e) => setpaymentMethod(e.target.value)}
             />
-            <label htmlFor="paypal">PayPal</label>
+            <label htmlFor="PayTM">PayTM</label>
           </div>
           <div>
             <input
               type="radio"
-              id="PayTM"
-              value="PayTM"
+              id="Google Pay"
+              value="Google Pay"
               name="paymentMethod"
-              onClick={(e) => setpaymentMethod(e.target.value)}
+              required
+              onChange={(e) => setpaymentMethod(e.target.value)}
             />
-            <label htmlFor="PayTM">PayTM</label>
+            <label htmlFor="Google Pay">Google Pay</label>
           </div>
         </div>
         <div>

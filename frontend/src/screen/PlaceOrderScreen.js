@@ -1,24 +1,47 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CheckoutSteps from "../components/CheckoutSteps";
+import { createOrder } from "../redux/actions/order";
+import { ORDER_CREATE_RESET } from "../redux/actions/order/actionTypes";
+
+import MessageBox from "../components/MessageBox";
+import LoadingBox from "../components/LoadingBox";
 
 function PlaceOrderScreen(props) {
+  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
   if (!cart.paymentMethod) {
     props.history.push("/payment");
   }
-  const placeOrderHandler = (e) => {
-    e.preventDefault();
-  };
+  const orderCreate = useSelector((state) => state.orderCreate);
+
+  const { loading, success, error, order } = orderCreate;
+
   const toPrice = (num) => Number(Number(num).toFixed(2));
   cart.itemsPrice = toPrice(
     cart.cartItems.reduce((a, c) => a + c.qty * c.price, 0)
   );
+
   cart.shippingPrice = cart.itemsPrice > 100 ? toPrice(0) : toPrice(10);
-  cart.taxPrice = toPrice(0.15 * cart.itemsPrice);
+
+  cart.taxPrice =
+    cart.cartItems.length > 0 ? toPrice(0.15 * cart.itemsPrice) : 0;
+
   cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
+
+  const placeOrderHandler = (e) => {
+    e.preventDefault();
+    dispatch(createOrder({ ...cart, orderItems: cart.cartItems }));
+  };
+
+  useEffect(() => {
+    if (success) {
+      props.history.push(`/order/${order._id}`);
+      dispatch({ type: ORDER_CREATE_RESET });
+    }
+  }, [dispatch, order, props.history, success]);
 
   return (
     <div>
@@ -123,6 +146,8 @@ function PlaceOrderScreen(props) {
                   Place Order
                 </button>
               </li>
+              {loading && <LoadingBox></LoadingBox>}
+              {error && <MessageBox variant="danger">{error}</MessageBox>}
             </ul>
           </div>
         </div>
