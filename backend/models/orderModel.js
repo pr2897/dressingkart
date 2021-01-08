@@ -26,7 +26,7 @@ const orderSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    itemPrice: { type: Number, required: true },
+    itemsPrice: { type: Number, required: true },
     shippingPrice: { type: Number, required: true },
     taxPrice: { type: Number, required: true },
     totalPrice: { type: Number, required: true },
@@ -40,4 +40,4 @@ const orderSchema = new mongoose.Schema(
 );
 
 const Order = mongoose.model('Order', orderSchema);
-export default Order;
+module.exports = Order;
