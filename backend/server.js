@@ -6,6 +6,7 @@ const morgan = require('morgan');
 
 const userRouter = require('./routers/userRouter');
 const ProductRouter = require('./routers/productRouter');
+const orderRouter = require('./routers/orderRouter');
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 // ROUTERS
 app.use('/api/v1/users/', userRouter);
 app.use('/api/v1/products', ProductRouter);
+app.use('/api/v1/orders', orderRouter);
 
 app.use((err, req, res, next) =>
   res.status(500).send({ message: err.message })
