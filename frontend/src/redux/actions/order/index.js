@@ -7,6 +7,9 @@ import {
   ORDER_DETAILS_FAIL,
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
+  ORDER_PAY_REQUEST,
+  ORDER_PAY_FAIL,
+  ORDER_PAY_SUCCESS,
 } from "./actionTypes";
 
 export const createOrder = (order) => async (dispatch, getState) => {
@@ -53,5 +56,43 @@ export const detailsOrder = (orderId) => async (dispatch, getState) => {
         ? err.response.data.message
         : err.message;
     dispatch({ type: ORDER_DETAILS_FAIL, payload: message });
+  }
+};
+
+export const payOrder = (order, paymentResult) => async (
+  dispatch,
+  getState
+) => {
+  dispatch({ type: ORDER_PAY_REQUEST, payload: { order, paymentResult } });
+  const {
+    userSignIn: { userInfo },
+  } = getState();
+
+  const {
+    paymentMethodData: {
+      info: { cardDetails: card_detail },
+    },
+  } = paymentResult;
+
+  try {
+    const { data } = await axios.put(
+      `/api/v1/orders/${order._id}/pay`,
+      { card_detail, status: "SUCCESS" },
+      {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      }
+    );
+
+    // const { {info} paymentMethodData : } = paymentResult;
+
+    dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
+  } catch (err) {
+    const message =
+      err.message && err.response.data.message
+        ? err.response.data.message
+        : err.message;
+    dispatch({ type: ORDER_PAY_FAIL, payload: message });
   }
 };

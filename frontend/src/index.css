@@ -198,6 +198,10 @@ img.small {
   color: #a02020;
   background-color: #ffe0e0;
 }
+.alert-success {
+  color: #130c0c;
+  background-color: #6ddd6d;
+}
 
 /* Cart */
 .cartList {

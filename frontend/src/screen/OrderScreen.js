@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import MessageBox from "../components/MessageBox";
 import LoadingBox from "../components/LoadingBox";
-import { detailsOrder } from "../redux/actions/order";
+import { detailsOrder, payOrder } from "../redux/actions/order";
 
 import PaymentButton from "../components/PaymentButton";
 
@@ -12,11 +12,23 @@ function OrderScreen(props) {
   const orderId = props.match.params.id;
   const orderDetails = useSelector((state) => state.orderDetails);
   const { order, loading, error } = orderDetails;
+
+  const orderPay = useSelector((state) => state.orderPay);
+  const { error: errorPay, loading: loadingPay } = orderPay;
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(detailsOrder(orderId));
-  }, [dispatch, orderId]);
+  }, [orderId, dispatch]);
+
+  const successPaymentHandler = (paymentResult) => {
+    // console.log(`Success payment handler called`);
+    // console.log(paymentResult);
+    dispatch(payOrder(order, paymentResult));
+    dispatch(detailsOrder(orderId));
+  };
+
   return loading ? (
     <LoadingBox></LoadingBox>
   ) : error ? (
@@ -55,7 +67,7 @@ function OrderScreen(props) {
                 <p>
                   <strong>Method:</strong> {order.paymentMethod} <br />
                 </p>
-                {order.isDelivered ? (
+                {order.isPaid ? (
                   <MessageBox variant="success">
                     Paid At {order.paidAt}
                   </MessageBox>
@@ -133,7 +145,18 @@ function OrderScreen(props) {
               </li>
             </ul>
             <hr />
-            <PaymentButton amountToPay={order.totalPrice} />
+            {errorPay && <MessageBox variant="danger">{errorPay}</MessageBox>}
+            {loadingPay && <LoadingBox></LoadingBox>}
+            {/* {!order.isPaid && (
+              <PaymentButton
+                amountToPay={order.totalPrice}
+                onSuccess={successPaymentHandler}
+              />
+            )} */}
+            <PaymentButton
+              amountToPay={order.totalPrice}
+              onSuccess={successPaymentHandler}
+            />
           </div>
         </div>
       </div>

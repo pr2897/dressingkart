@@ -26,6 +26,10 @@ const orderSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    paymentResult: {
+      card_detail: String,
+      status: String,
+    },
     itemsPrice: { type: Number, required: true },
     shippingPrice: { type: Number, required: true },
     taxPrice: { type: Number, required: true },

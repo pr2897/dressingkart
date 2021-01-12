@@ -2,7 +2,7 @@ import React from "react";
 
 import GooglePayButton from "@google-pay/button-react";
 
-function PaymentButton({ amountToPay }) {
+function PaymentButton({ amountToPay, onSuccess }) {
   return (
     <>
       <GooglePayButton
@@ -40,11 +40,9 @@ function PaymentButton({ amountToPay }) {
           //   shippingAddressRequired: true,
           callbackIntents: ["PAYMENT_AUTHORIZATION"],
         }}
-        onLoadPaymentData={(paymentRequest) => {
-          console.log("Success", paymentRequest);
-        }}
-        onPaymentAuthorized={(paymentData) => {
-          console.log("Payment Authorized Success", paymentData);
+        onLoadPaymentData={(paymentRequest) => {}}
+        onPaymentAuthorized={async (paymentData) => {
+          await onSuccess(paymentData);
           return { transactionState: "SUCCESS" };
         }}
         existingPaymentMethodRequired="false"
