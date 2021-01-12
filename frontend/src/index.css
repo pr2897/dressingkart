@@ -82,6 +82,11 @@ button.primary {
 button.block {
   width: 100%;
 }
+
+button.small {
+  font-size: 1.2rem;
+}
+
 input:hover,
 select:hover,
 textarea:hover,
@@ -270,4 +275,30 @@ img.small {
 /* Payment Method */
 .payment-method {
   display: flex;
+}
+
+/* table */
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table tbody tr:nth-of-type(odd) {
+  background: #f4f4f4;
+}
+
+.table tbody tr:nth-of-type(even) {
+  background: #9e9583;
+}
+
+.table td,
+.table th {
+  padding: 4px;
+  text-align: center;
+  border: 0.1rem solid;
+}
+
+.table button {
+  margin: 0 0.2rem;
 }

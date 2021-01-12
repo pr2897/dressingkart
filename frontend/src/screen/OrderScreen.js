@@ -147,16 +147,12 @@ function OrderScreen(props) {
             <hr />
             {errorPay && <MessageBox variant="danger">{errorPay}</MessageBox>}
             {loadingPay && <LoadingBox></LoadingBox>}
-            {/* {!order.isPaid && (
+            {!order.isPaid && (
               <PaymentButton
                 amountToPay={order.totalPrice}
                 onSuccess={successPaymentHandler}
               />
-            )} */}
-            <PaymentButton
-              amountToPay={order.totalPrice}
-              onSuccess={successPaymentHandler}
-            />
+            )}
           </div>
         </div>
       </div>

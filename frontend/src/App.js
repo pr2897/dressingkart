@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import { signout } from "./redux/actions/user";
 import CartScreen from "./screen/CartScreen";
 import HomeScreen from "./screen/HomeScreen";
+import OrderHistoryScreen from "./screen/OrderHistoryScreen";
 import OrderScreen from "./screen/OrderScreen";
 import PaymentMethodScreen from "./screen/PaymentMethodScreen";
 import PlaceOrderScreen from "./screen/PlaceOrderScreen";
@@ -44,9 +45,14 @@ function App() {
                   {userInfo.name} <i className="fa fa-caret-down"></i>
                 </Link>
                 <ul className="dropdown-content">
-                  <Link to="#signout" onClick={signoutHandler}>
-                    Sign out
-                  </Link>
+                  <li>
+                    <Link to="/order-history">Order History</Link>
+                  </li>
+                  <li>
+                    <Link to="#signout" onClick={signoutHandler}>
+                      Sign out
+                    </Link>
+                  </li>
                 </ul>
               </div>
             ) : (
@@ -64,6 +70,7 @@ function App() {
           <Route path="/payment" component={PaymentMethodScreen}></Route>
           <Route path="/place-order" component={PlaceOrderScreen}></Route>
           <Route path="/order/:id" component={OrderScreen}></Route>
+          <Route path="/order-history" component={OrderHistoryScreen}></Route>
           <Route path="/" component={HomeScreen} exact />
         </main>
 
