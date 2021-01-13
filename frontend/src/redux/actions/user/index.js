@@ -6,6 +6,9 @@ import {
   USER_SIGNIN_REQUEST,
   USER_SIGNIN_SUCCESS,
   USER_SIGNOUT,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
+  USER_DETAILS_FAIL,
 } from "./actionTypes";
 
 import axios from "axios";
@@ -58,4 +61,29 @@ export const signout = () => async (dispatch) => {
   localStorage.removeItem("shippingAddress");
 
   dispatch({ type: USER_SIGNOUT });
+};
+
+export const detailsUser = (userId) => async (dispatch, getState) => {
+  dispatch({ type: USER_DETAILS_REQUEST, payload: userId });
+
+  const {
+    userSignIn: { userInfo },
+  } = getState();
+
+  try {
+    const { data } = await axios.get(`/api/v1/users/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    });
+    dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: USER_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
 };
