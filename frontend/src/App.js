@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Link, Route } from "react-router-dom";
+import PrivateRoute from "./components/PrivateRoute";
 import { signout } from "./redux/actions/user";
 import CartScreen from "./screen/CartScreen";
 import HomeScreen from "./screen/HomeScreen";
@@ -30,7 +31,7 @@ function App() {
         <header className="row">
           <div>
             <Link className="brand" to="/">
-              amazona
+              Dressingkart
             </Link>
           </div>
           <div>
@@ -75,7 +76,10 @@ function App() {
           <Route path="/place-order" component={PlaceOrderScreen}></Route>
           <Route path="/order/:id" component={OrderScreen}></Route>
           <Route path="/order-history" component={OrderHistoryScreen}></Route>
-          <Route path="/profile" component={ProfileScreen}></Route>
+          <PrivateRoute
+            path="/profile"
+            component={ProfileScreen}
+          ></PrivateRoute>
           <Route path="/" component={HomeScreen} exact />
         </main>
 
